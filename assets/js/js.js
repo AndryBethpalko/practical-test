@@ -124,18 +124,19 @@ class imgLoader{
 
         // It is not clear from the task whether we should have one svg element or three
 
-        // So for one element we should use commented string
+        // So for one element we should set xlink:href
 
-        // document.getElementById('image2077').setAttributeNS(
-        //     'http://www.w3.org/1999/xlink',
-        //     'xlink:href',
-        //     `/assets/imgs/B1_${image}.jpg`
-        // );
+        document.getElementById('image2077').setAttributeNS(
+            'http://www.w3.org/1999/xlink',
+            'xlink:href',
+            `/assets/imgs/B1_${image}.jpg`
+        );
 
-        // This code we use for multiple svg objects
+
+
         for (let k = minImgNumber, i = 0; k <= maxImgNumber; k++, i++) {
             this.dots[i].style.backgroundColor = image === k ? 'white' : '';
-            this.svg[i].style.display = image === k ? '' : 'none';
+            // this.svg[i].style.display = image === k ? '' : 'none'; // This code we use for multiple svg objects
         }
         this.setInterval(3000);
     }
