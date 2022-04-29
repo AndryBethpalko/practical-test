@@ -2,49 +2,74 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title>Title</title>
+    <title>Title</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
-  <!-- Common CSS -->
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/main-style.css">
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/main-style.css">
 </head>
 
 <body class="app-view">
-  <main>
-    <div class="building-view-1  apartment-view ">
-      <div class="container-3">
-        <ul>
-          <li>Create SVG versions for B1_{2,3}</li>
-          <li>Add the SVG images inside the `svg-box` div, replacing the current SVG while keeping it embedded/?, so we can style different elements of the SVG individually)</li>
-          <li>load it dynamically, based on the 'image' query parameter, or B1_1 by default if no such (valid) parameter exists</li>
-          <li>Allow the user to cycle through these images using a slider-like behavior, with &lt; and &gt; to go to the prev/next image</li>
-          <li>Keep each image pan-zoom-able</li>
-          <li>Replace all this text when done, and allow the svg-box occupy the remaining space</li>
-          <li>Center the image in the box, on all devices (test on iPhone, iPad and Web 1920x1080px)</li>
-        </ul>
-        <div class="svg-box">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="254mm" height="179.66266mm" viewBox="0 0 254 179.66266" version="1.1" id="svg1985">
-            <g id="bg" transform="translate(0,0)">
-              <image xlink:href="/assets/imgs/B1_1.jpg" y="0" x="0" id="image2077" preserveAspectRatio="none" height="179.66266" width="254" />
-            </g>
-          </svg>
+<main style="height: 100%">
+    <div class="building-view-1  apartment-view " style="width: 100%; height: 100%; display: flex">
+        <div class="container-3" style="margin: auto">
+            <!--<ul>-->
+            <!--<li>Create SVG versions for B1_{2,3}</li>-->
+            <!--<li>Add the SVG images inside the `svg-box` div, replacing the current SVG while keeping it embedded/?,-->
+            <!--so we can style different elements of the SVG individually)-->
+            <!--</li>-->
+            <!--<li>load it dynamically, based on the 'image' query parameter, or B1_1 by default if no such (valid)-->
+            <!--parameter exists-->
+            <!--</li>-->
+            <!--<li>Allow the user to cycle through these images using a slider-like behavior, with &lt; and &gt; to go-->
+            <!--to the prev/next image-->
+            <!--</li>-->
+            <!--<li>Keep each image pan-zoom-able</li>-->
+            <!--<li>Replace all this text when done, and allow the svg-box occupy the remaining space</li>-->
+            <!--<li>Center the image in the box, on all devices (test on iPhone, iPad and Web 1920x1080px)</li>-->
+            <!--</ul>-->
+            <div id='en' style="position: relative;">
+                <div class="svg-box" style="z-index: 1;">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="254mm"
+                         height="179.66266mm" viewBox="0 0 254 179.66266" version="1.1" id="svg1985">
+                        <g id="bg" transform="translate(0,0)">
+                            <image xlink:href="/assets/imgs/B1_1.jpg" y="0" x="0" id="image2077"
+                                   preserveAspectRatio="none" height="179.66266" width="254"/>
+                        </g>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="254mm"
+                         height="179.66266mm" viewBox="0 0 254 179.66266" version="1.1" id="svg1985">
+                        <g id="bg" transform="translate(0,0)">
+                            <image xlink:href="/assets/imgs/B1_2.jpg" y="0" x="0" id="image2077"
+                                   preserveAspectRatio="none" height="179.66266" width="254"/>
+                        </g>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="254mm"
+                         height="179.66266mm" viewBox="0 0 254 179.66266" version="1.1" id="svg1985">
+                        <g id="bg" transform="translate(0,0)">
+                            <image xlink:href="/assets/imgs/B1_3.jpg" y="0" x="0" id="image2077"
+                                   preserveAspectRatio="none" height="179.66266" width="254"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script src="/assets/js/params.js"></script>
     <script src="/assets/js/panzoom.js"></script>
     <script src="/assets/js/configure-panzoom.js"></script>
     <script src="/assets/js/zoom-svg.js"></script>
-  </main>
+    <script src="/assets/js/js.js"></script>
+</main>
 </body>
 
 </html>
