@@ -25,7 +25,7 @@ svg {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  max-height: calc(100vh - 170px);
+  /*max-height: calc(100vh - 170px);*/
 }
 
 /* Set core body defaults */
