@@ -1,21 +1,64 @@
 .main {
-    height: 100%
+  height: 100%;
 }
 
 .envelope {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .add-container-3 {
-    margin: auto
+  margin: auto;
+  height: 100%;
+  width: 100%;
 }
 
 .container-en {
-    position: relative;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
 .svg-envelop {
-    z-index: 1
+  margin: auto;
+}
+
+.floating-button {
+  box-shadow: 1px 1px 2px black;
+  transition: .3s;
+}
+
+.floating-button:hover {
+  box-shadow: 3px 3px 4px black;
+  transform: translateY(-4px);
+}
+
+.floating-button:active {
+  box-shadow: 1px 1px 3px black;
+  transform: translateY(-1px);
+}
+
+.floating-text-button {
+  text-shadow: 1px 1px 2px black;
+  transition: .3s;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.floating-text-button:hover {
+  text-shadow: 3px 3px 4px black;
+  transform: translateY(-4px);
+}
+
+.floating-text-button:active {
+  text-shadow: 1px 1px 3px black;
+  transform: translateY(-1px);
 }
