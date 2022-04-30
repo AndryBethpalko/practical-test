@@ -33,8 +33,8 @@ function setElementProperty(elem, properties) {
 let maxImgNumber = 3;
 let minImgNumber = 1;
 
-class imgLoader{
-    constructor(){
+class imgLoader {
+    constructor() {
         let self = this;
         this._imgLoaderData = {
             svg: document.querySelectorAll('svg'), // We do not need it if use one svg object
@@ -44,8 +44,18 @@ class imgLoader{
             timeout: null
         };
 
-        for (let i = 0; i < this.svg.length; i++ ) {
-            this._imgLoaderData.panzoom.push(createPanZoom(this.svg[i]));
+        for (let i = 0; i < this.svg.length; i++) {
+            this._imgLoaderData.panzoom.push(
+                {
+                    target: createPanZoom(
+                        this.svg[i],
+                        function () {
+                            this.setInterval(3000);
+                        }.bind(this)
+                    ),
+                    resized: true
+                }
+            );
         }
 
         let envelope = createHtmlElem(
@@ -58,36 +68,82 @@ class imgLoader{
                         display: 'flex',
                         position: 'absolute',
                         width: '100%',
-                        bottom: '40px'
+                        bottom: '20vh'
                     }
                 }
             ),
             {
                 style: {
                     display: 'flex',
-                    margin: 'auto'
+                    margin: 'auto',
+                    backgroundColor: 'rgb(128 128 128 /35%)',
+                    borderRadius: '5px'
                 }
             }
+        );
+        createArrow(
+            '&lt',
+            function () {
+                let image = this.image;
+                this.image = image <= minImgNumber ? maxImgNumber : image - 1;
+                this.setInterval(3000);
+            }.bind(this)
         );
         for (let i = minImgNumber; i <= maxImgNumber; i++) {
             this.dots.push(createDot(i));
         }
+        createArrow(
+            '&gt',
+            function () {
+                this.image++;
+                this.setInterval(3000);
+            }.bind(this)
+        );
+        window.addEventListener(
+            'resize',
+            this.onResize.bind(this)
+        );
         // this.image = params.image;
         this.setInterval(200);
+
+
+        function createArrow(sign, collBack) {
+            let arrow = createHtmlElem(
+                'div',
+                envelope,
+                {
+                    innerHTML: sign,
+                    className: 'floating-text-button',
+                    style: {
+                        margin: 'auto 5px',
+                        zIndex: '999',
+                        color: 'white',
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer'
+                    }
+                }
+            );
+            arrow.addEventListener(
+                'click',
+                collBack
+            );
+        }
 
         function createDot(image) {
             let dot = createHtmlElem(
                 'div',
                 envelope,
                 {
+                    className: 'floating-button',
                     style: {
-                        margin: '0 5px',
+                        margin: 'auto 5px',
                         border: '1px solid white',
                         borderRadius: '7px',
                         zIndex: '999',
                         width: '15px',
                         height: '15px',
-                        boxShadow: '1px 1px 2px black'
+                        cursor: 'pointer'
                     }
                 }
             );
@@ -143,15 +199,26 @@ class imgLoader{
         // );
 
 
-
         for (let k = minImgNumber, i = 0; k <= maxImgNumber; k++, i++) {
             this.dots[i].style.backgroundColor = image === k ? 'white' : '';
             this.svg[i].style.display = image === k ? '' : 'none'; // This code we use for multiple svg objects
-            image === k && setQueryStringParameterAndSaveItInBrowserHistory(
-                this.panzoom[i],
-                'zoom',
-                this.panzoom[i].getScale().toFixed(2)
-            );
+            if (image === k) {
+                setQueryStringParameterAndSaveItInBrowserHistory(
+                    this.panzoom[i].target,
+                    'zoom',
+                    this.panzoom[i].target.getScale().toFixed(2)
+                );
+                if (!this.panzoom[i].resized) {
+                    this.panzoom[i].target.destroy();
+                    this.panzoom[i].target = createPanZoom(
+                        this.svg[i],
+                        function () {
+                            this.setInterval(3000);
+                        }.bind(this)
+                    );
+                    this.panzoom[i].resized = true;
+                }
+            }
         }
         this.setInterval(3000);
     }
@@ -173,14 +240,30 @@ class imgLoader{
             value
         );
     }
+
+    onResize() {
+        for (let i = 0; i < this.panzoom.length; i++) {
+            if (i !== this.image - minImgNumber) {
+                this.panzoom[i].resized = false;
+            } else {
+                this.panzoom[i].target.destroy();
+                this.panzoom[i].target = createPanZoom(
+                    this.svg[i],
+                    function () {
+                        this.setInterval(3000);
+                    }.bind(this)
+                );
+            }
+        }
+    }
 }
 
-function setParamsImage (image) {
+function setParamsImage(image) {
     params.image = image;
     window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params.target}`));
 }
 
-let imageLoader;
+let imageLoader = null;
 
 window.addEventListener(
     'load',
