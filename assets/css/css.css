@@ -1,0 +1,21 @@
+.main {
+    height: 100%
+}
+
+.envelope {
+    width: 100%;
+    height: 100%;
+    display: flex
+}
+
+.add-container-3 {
+    margin: auto
+}
+
+.container-en {
+    position: relative;
+}
+
+.svg-envelop {
+    z-index: 1
+}
