@@ -1,7 +1,7 @@
 // const svg = document.querySelectorAll('svg');
 const step = 0.5;
 
-params.zoom ||= 1.0;
+params.zoom = params.zoom || 1.0;
 //
 // for (let i =0 ; i < svg.length; i++) {
 //   createPanZoom(svg[i]);
@@ -14,21 +14,25 @@ function setQueryStringParameterAndSaveItInBrowserHistory(panzoom, name, value) 
     params.x = pan.x.toFixed(0);
     params.y = pan.y.toFixed(0);
     window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params.target}`));
-    imageLoader.setInterval(5000);
+    imageLoader ? imageLoader.setInterval(5000) : console.log('ups');
 }
 
-function createPanZoom(svg) {
+function createPanZoom(svg, onPanCallBack) {
 
-    var panzoom = Panzoom(svg, {
-        zoomEnabled: true,
-        disablePan: false,
-        animate: false,
-        duration: 300,
-        contain: 'outside',
-        easing: 'ease',
-        maxScale: 9,
-        roundPixels: true,
-    });
+    var panzoom = Panzoom(
+        svg,
+        {
+            zoomEnabled: true,
+            disablePan: false,
+            animate: false,
+            duration: 300,
+            contain: 'outside',
+            easing: 'ease',
+            maxScale: 9,
+            roundPixels: true,
+        },
+        onPanCallBack
+    );
 
 
     svg.addEventListener('wheel', (event) => {
@@ -46,16 +50,18 @@ function createPanZoom(svg) {
         panzoom.zoom(toScale);
 
         setQueryStringParameterAndSaveItInBrowserHistory(panzoom, 'zoom', toScale.toFixed(2));
-    }, { passive: false });
+    }, {passive: false});
 
     const startScale = params.zoom || 1;
     const startX = params.x || 0;
     const startY = params.y || 0;
-    //
-    setTimeout(() => panzoom.zoom(startScale));
-    setTimeout(() => panzoom.pan(startX, startY), 100);
+    adjustSrc(panzoom,startScale,startX, startY);
 
     return panzoom;
 }
 
+function adjustSrc(panzoom,startScale,startX, startY) {
+    setTimeout(() => panzoom.zoom(startScale));
+    setTimeout(() => panzoom.pan(startX, startY), 100);
+}
 
