@@ -340,7 +340,7 @@
         step: 0.3,
         touchAction: 'none'
     };
-    function Panzoom(elem, options) {
+    function Panzoom(elem, options, onPanCallBack) {
         if (!elem) {
             throw new Error('Panzoom requires an element as an argument');
         }
@@ -675,6 +675,7 @@
             pan(origX + (current.clientX - startClientX) / scale, origY + (current.clientY - startClientY) / scale, {
                 animate: false
             });
+            onPanCallBack && onPanCallBack();
         }
         function handleUp(event) {
             // Don't call panzoomend when panning with 2 touches
