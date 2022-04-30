@@ -38,10 +38,15 @@ class imgLoader{
         let self = this;
         this._imgLoaderData = {
             svg: document.querySelectorAll('svg'), // We do not need it if use one svg object
+            panzoom: [], // We do not need it if use one svg object
             image: 0,
             dots: [],
             timeout: null
         };
+
+        for (let i = 0; i < this.svg.length; i++ ) {
+            this._imgLoaderData.panzoom.push(createPanZoom(this.svg[i]));
+        }
 
         let envelope = createHtmlElem(
             'div',
@@ -67,8 +72,8 @@ class imgLoader{
         for (let i = minImgNumber; i <= maxImgNumber; i++) {
             this.dots.push(createDot(i));
         }
-        this.image = params.image;
-        this.setInterval(3000);
+        // this.image = params.image;
+        this.setInterval(200);
 
         function createDot(image) {
             let dot = createHtmlElem(
@@ -82,6 +87,7 @@ class imgLoader{
                         zIndex: '999',
                         width: '15px',
                         height: '15px',
+                        boxShadow: '1px 1px 2px black'
                     }
                 }
             );
@@ -116,6 +122,10 @@ class imgLoader{
         return this._imgLoaderData.image;
     }
 
+    get panzoom() {
+        return this._imgLoaderData.panzoom;
+    }
+
     set image(value) {
         let image = parseInt(value);
         image = image >= minImgNumber && image <= maxImgNumber ? image : minImgNumber;
@@ -126,17 +136,22 @@ class imgLoader{
 
         // So for one element we should set xlink:href
 
-        document.getElementById('image2077').setAttributeNS(
-            'http://www.w3.org/1999/xlink',
-            'xlink:href',
-            `/assets/imgs/B1_${image}.jpg`
-        );
+        // document.getElementById('image2077').setAttributeNS(
+        //     'http://www.w3.org/1999/xlink',
+        //     'xlink:href',
+        //     `/assets/imgs/B1_${image}.jpg`
+        // );
 
 
 
         for (let k = minImgNumber, i = 0; k <= maxImgNumber; k++, i++) {
             this.dots[i].style.backgroundColor = image === k ? 'white' : '';
-            // this.svg[i].style.display = image === k ? '' : 'none'; // This code we use for multiple svg objects
+            this.svg[i].style.display = image === k ? '' : 'none'; // This code we use for multiple svg objects
+            image === k && setQueryStringParameterAndSaveItInBrowserHistory(
+                this.panzoom[i],
+                'zoom',
+                this.panzoom[i].getScale().toFixed(2)
+            );
         }
         this.setInterval(3000);
     }
