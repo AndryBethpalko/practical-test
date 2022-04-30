@@ -1,10 +1,20 @@
-const svg = document.querySelectorAll('svg');
+// const svg = document.querySelectorAll('svg');
 const step = 0.5;
 
 params.zoom ||= 1.0;
+//
+// for (let i =0 ; i < svg.length; i++) {
+//   createPanZoom(svg[i]);
+// }
 
-for (let i =0 ; i < svg.length; i++) {
-  createPanZoom(svg[i]);
+
+function setQueryStringParameterAndSaveItInBrowserHistory(panzoom, name, value) {
+    params[name] = value;
+    const pan = panzoom.getPan();
+    params.x = pan.x.toFixed(0);
+    params.y = pan.y.toFixed(0);
+    window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params.target}`));
+    imageLoader.setInterval(5000);
 }
 
 function createPanZoom(svg) {
@@ -20,14 +30,6 @@ function createPanZoom(svg) {
         roundPixels: true,
     });
 
-    function setQueryStringParameterAndSaveItInBrowserHistory(name, value) {
-        params[name] = value;
-        const pan = panzoom.getPan();
-        params.x = pan.x.toFixed(0);
-        params.y = pan.y.toFixed(0);
-        window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params.target}`));
-        imageLoader.setInterval(5000);
-    }
 
     svg.addEventListener('wheel', (event) => {
         // if (!event.ctrlKey) return;
@@ -43,15 +45,17 @@ function createPanZoom(svg) {
 
         panzoom.zoom(toScale);
 
-        setQueryStringParameterAndSaveItInBrowserHistory('zoom', toScale.toFixed(2));
+        setQueryStringParameterAndSaveItInBrowserHistory(panzoom, 'zoom', toScale.toFixed(2));
     }, { passive: false });
 
     const startScale = params.zoom || 1;
     const startX = params.x || 0;
     const startY = params.y || 0;
-
+    //
     setTimeout(() => panzoom.zoom(startScale));
     setTimeout(() => panzoom.pan(startX, startY), 100);
+
+    return panzoom;
 }
 
 
