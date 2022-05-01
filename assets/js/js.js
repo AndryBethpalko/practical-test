@@ -30,8 +30,10 @@ function setElementProperty(elem, properties) {
     }
 }
 
-let maxImgNumber = 3;
-let minImgNumber = 1;
+const maxImgNumber = 3;
+const minImgNumber = 1;
+const afterUserChangeInterval = 15000;
+const defaultInterval = 3000;
 
 class imgLoader {
     constructor() {
@@ -50,7 +52,7 @@ class imgLoader {
                     target: createPanZoom(
                         this.svg[i],
                         function () {
-                            this.setInterval(3000);
+                            this.setInterval(afterUserChangeInterval);
                         }.bind(this)
                     ),
                     resized: true
@@ -86,7 +88,7 @@ class imgLoader {
             function () {
                 let image = this.image;
                 this.image = image <= minImgNumber ? maxImgNumber : image - 1;
-                this.setInterval(3000);
+                this.setInterval(afterUserChangeInterval);
             }.bind(this)
         );
         for (let i = minImgNumber; i <= maxImgNumber; i++) {
@@ -96,15 +98,19 @@ class imgLoader {
             '&gt',
             function () {
                 this.image++;
-                this.setInterval(3000);
+                this.setInterval(afterUserChangeInterval);
             }.bind(this)
         );
         window.addEventListener(
             'resize',
             this.onResize.bind(this)
         );
-        // this.image = params.image;
-        this.setInterval(200);
+        setTimeout(
+            function () {
+                this.image = params.image;
+            }.bind(this),
+            200
+        );
 
 
         function createArrow(sign, collBack) {
@@ -213,14 +219,21 @@ class imgLoader {
                     this.panzoom[i].target = createPanZoom(
                         this.svg[i],
                         function () {
-                            this.setInterval(3000);
+                            this.setInterval(afterUserChangeInterval);
                         }.bind(this)
                     );
                     this.panzoom[i].resized = true;
                 }
             }
         }
-        this.setInterval(3000);
+        this.setInterval(defaultInterval);
+        // fire Google Analytics event
+        // dataLayer.push(
+        //     {
+        //         'event': 'ImgShow',
+        //         'img': `B1_${image}.jpg`
+        //     }
+        // );
     }
 
     /**
@@ -250,7 +263,7 @@ class imgLoader {
                 this.panzoom[i].target = createPanZoom(
                     this.svg[i],
                     function () {
-                        this.setInterval(3000);
+                        this.setInterval(afterUserChangeInterval);
                     }.bind(this)
                 );
             }
