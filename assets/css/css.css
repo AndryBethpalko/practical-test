@@ -28,7 +28,7 @@
 
 .floating-button {
   box-shadow: 1px 1px 2px black;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .floating-button:hover {
@@ -43,7 +43,7 @@
 
 .floating-text-button {
   text-shadow: 1px 1px 2px black;
-  transition: .3s;
+  transition: 0.3s;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
