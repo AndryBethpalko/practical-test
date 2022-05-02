@@ -2,6 +2,22 @@
 <html lang="en">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-M4SXWZD');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -19,12 +35,20 @@
 </head>
 
 <body class="app-view">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M4SXWZD"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 <main class="main">
     <div class="building-view-1  apartment-view envelope ">
         <div class="container-3 add-container-3">
             <!--<ul>-->
             <!--<li>Create SVG versions for B1_{2,3}</li>-->
-            <!--<li>Add the SVG images inside the `svg-box` div, replacing the current SVG while keeping it embedded/?,-->
+            <!--<li>Add the SVG images inside the `svgContainer-box` div, replacing the current SVG while keeping it embedded/?,-->
             <!--so we can style different elements of the SVG individually)-->
             <!--</li>-->
             <!--<li>load it dynamically, based on the 'image' query parameter, or B1_1 by default if no such (valid)-->
@@ -34,32 +58,11 @@
             <!--to the prev/next image-->
             <!--</li>-->
             <!--<li>Keep each image pan-zoom-able</li>-->
-            <!--<li>Replace all this text when done, and allow the svg-box occupy the remaining space</li>-->
+            <!--<li>Replace all this text when done, and allow the svgContainer-box occupy the remaining space</li>-->
             <!--<li>Center the image in the box, on all devices (test on iPhone, iPad and Web 1920x1080px)</li>-->
             <!--</ul>-->
             <div id='en' class="container-en">
-                <div class="svg-box svg-envelop ">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1301 920" version="1.1" id="svg1985"
-                         preserveAspectRatio="xMidYMid meet">
-                        <g id="bg" transform="translate(0,0)">
-                            <image xlink:href="/assets/imgs/B1_1.jpg" y="0" x="0" id="image2077"
-                                   height="100%" width="100%"/>
-                        </g>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1855 920" version="1.1" id="svg1986"
-                         preserveAspectRatio="xMidYMid meet">
-                        <g id="bg1" transform="translate(0,0)">
-                            <image xlink:href="/assets/imgs/B1_2.jpg" y="0" x="0" id="image2078"
-                                   height="100%" width="100%"/>
-                        </g>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1301 920" version="1.1" id="svg1987"
-                         preserveAspectRatio="xMidYMid meet">
-                        <g id="bg2" transform="translate(0,0)">
-                            <image xlink:href="/assets/imgs/B1_3.jpg" y="0" x="0" id="image2079"
-                                   height="100%" width="100%"/>
-                        </g>
-                    </svg>
+                <div id='svgbox' class="svg-box svg-envelop ">
                 </div>
             </div>
         </div>
