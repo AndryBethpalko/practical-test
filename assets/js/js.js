@@ -32,33 +32,24 @@ function setElementProperty(elem, properties) {
 
 const maxImgNumber = 3;
 const minImgNumber = 1;
-const afterUserChangeInterval = 15000;
-const defaultInterval = 3000;
+const afterUserChangeInterval = 0;
+const defaultInterval = 2000;
 
 class imgLoader {
-    constructor() {
+    constructor(svgContainer, img) {
         let self = this;
         this._imgLoaderData = {
-            svg: document.querySelectorAll('svg'), // We do not need it if use one svg object
-            panzoom: [], // We do not need it if use one svg object
+            svgContainer: svgContainer,
+            panzoom: null,
+            htmlImg: img,
             image: 0,
             dots: [],
             timeout: null
         };
-
-        for (let i = 0; i < this.svg.length; i++) {
-            this._imgLoaderData.panzoom.push(
-                {
-                    target: createPanZoom(
-                        this.svg[i],
-                        function () {
-                            this.setInterval(afterUserChangeInterval);
-                        }.bind(this)
-                    ),
-                    resized: true
-                }
-            );
-        }
+        // // this.onResize();
+        // let doc = loadXMLDoc(
+        //     '/assets/imgs/B1_1.svgContainer'
+        // );
 
         let envelope = createHtmlElem(
             'div',
@@ -107,7 +98,9 @@ class imgLoader {
         );
         setTimeout(
             function () {
-                this.image = params.image;
+                let img = params.image;
+                this.image = img;
+                img === null && this.setInterval(defaultInterval);
             }.bind(this),
             200
         );
@@ -158,14 +151,15 @@ class imgLoader {
                 'click',
                 function () {
                     self.image = image;
+                    self.setInterval(afterUserChangeInterval);
                 }
             );
             return dot;
         }
     }
 
-    get svg() {
-        return this._imgLoaderData.svg;
+    get svgContainer() {
+        return this._imgLoaderData.svgContainer;
     }
 
     get timeout() {
@@ -184,8 +178,16 @@ class imgLoader {
         return this._imgLoaderData.image;
     }
 
+    get htmlImg() {
+        return this._imgLoaderData.htmlImg;
+    }
+
     get panzoom() {
         return this._imgLoaderData.panzoom;
+    }
+
+    set panzoom(value) {
+        this._imgLoaderData.panzoom = value;
     }
 
     set image(value) {
@@ -193,40 +195,14 @@ class imgLoader {
         image = image >= minImgNumber && image <= maxImgNumber ? image : minImgNumber;
         this._imgLoaderData.image = image;
         setParamsImage(image);
+        this.svgContainer.innerHTML = '';
+        this.loadImg(image);
 
-        // It is not clear from the task whether we should have one svg element or three
-
-        // So for one element we should set xlink:href
-
-        // document.getElementById('image2077').setAttributeNS(
-        //     'http://www.w3.org/1999/xlink',
-        //     'xlink:href',
-        //     `/assets/imgs/B1_${image}.jpg`
-        // );
 
 
         for (let k = minImgNumber, i = 0; k <= maxImgNumber; k++, i++) {
             this.dots[i].style.backgroundColor = image === k ? 'white' : '';
-            this.svg[i].style.display = image === k ? '' : 'none'; // This code we use for multiple svg objects
-            if (image === k) {
-                setQueryStringParameterAndSaveItInBrowserHistory(
-                    this.panzoom[i].target,
-                    'zoom',
-                    this.panzoom[i].target.getScale().toFixed(2)
-                );
-                if (!this.panzoom[i].resized) {
-                    this.panzoom[i].target.destroy();
-                    this.panzoom[i].target = createPanZoom(
-                        this.svg[i],
-                        function () {
-                            this.setInterval(afterUserChangeInterval);
-                        }.bind(this)
-                    );
-                    this.panzoom[i].resized = true;
-                }
-            }
         }
-        this.setInterval(defaultInterval);
         // fire Google Analytics event
         // dataLayer.push(
         //     {
@@ -236,38 +212,67 @@ class imgLoader {
         // );
     }
 
+    reqListener(response){
+        // this.svgContainer.appendChild(response.responseXML.children[0]);
+        this.svgContainer.innerHTML = response.responseText;
+        setTimeout(
+            function () {
+                this.onResize();
+                setQueryStringParameterAndSaveItInBrowserHistory(
+                    this.panzoom,
+                    'zoom',
+                    this.panzoom.getScale().toFixed(2)
+                );
+            }.bind(this)
+        );
+    }
+
+    loadImg(image) {
+        var oReq = new XMLHttpRequest();
+        var self = this;
+        oReq.addEventListener(
+            "load",
+            function () {
+                self.reqListener(this)
+            }
+        );
+        let time = Date.now();
+        oReq.open("GET", `/assets/imgs/B1_${image}.svg?${time}`);
+        oReq.send();
+    }
+
     /**
      *
      * @param {number} value
      */
     setInterval(value) {
-        clearInterval(this.timeout);
-        this.timeout = setTimeout(
+        this.timeout && clearInterval(this.timeout);
+        this.timeout = value ? setTimeout(
             function () {
                 let image = this.image;
                 if (++image > maxImgNumber) {
                     image = minImgNumber;
                 }
                 this.image = image;
+                this.setInterval(defaultInterval);
             }.bind(this),
             value
-        );
+        ) : null;
     }
 
     onResize() {
-        for (let i = 0; i < this.panzoom.length; i++) {
-            if (i !== this.image - minImgNumber) {
-                this.panzoom[i].resized = false;
-            } else {
-                this.panzoom[i].target.destroy();
-                this.panzoom[i].target = createPanZoom(
-                    this.svg[i],
-                    function () {
-                        this.setInterval(afterUserChangeInterval);
-                    }.bind(this)
+        this.panzoom && this.panzoom.destroy();
+        this.panzoom = createPanZoom(
+            this.svgContainer.querySelector('svg'),
+            function () {
+                this.setInterval(afterUserChangeInterval);
+                this.panzoom && setQueryStringParameterAndSaveItInBrowserHistory(
+                    this.panzoom,
+                    'zoom',
+                    this.panzoom.getScale().toFixed(2)
                 );
-            }
-        }
+            }.bind(this)
+        );
     }
 }
 
@@ -281,6 +286,6 @@ let imageLoader = null;
 window.addEventListener(
     'load',
     function () {
-        imageLoader = new imgLoader();
+        imageLoader = new imgLoader(document.getElementById('svgbox'));
     }
 );
