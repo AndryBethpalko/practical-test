@@ -213,8 +213,8 @@ class imgLoader {
     }
 
     reqListener(response){
-        // this.svgContainer.appendChild(response.responseXML.children[0]);
-        this.svgContainer.innerHTML = response.responseText;
+        this.svgContainer.appendChild(response.responseXML.children[0]);
+        // this.svgContainer.innerHTML = response.responseText;
         setTimeout(
             function () {
                 this.onResize();
@@ -266,11 +266,6 @@ class imgLoader {
             this.svgContainer.querySelector('svg'),
             function () {
                 this.setInterval(afterUserChangeInterval);
-                this.panzoom && setQueryStringParameterAndSaveItInBrowserHistory(
-                    this.panzoom,
-                    'zoom',
-                    this.panzoom.getScale().toFixed(2)
-                );
             }.bind(this)
         );
     }
