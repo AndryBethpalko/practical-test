@@ -14,7 +14,7 @@ function setQueryStringParameterAndSaveItInBrowserHistory(panzoom, name, value) 
     params.x = pan.x.toFixed(0);
     params.y = pan.y.toFixed(0);
     window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params.target}`));
-    imageLoader ? imageLoader.setInterval(5000) : console.log('ups');
+    // imageLoader ? imageLoader.setInterval(5000) : console.log('ups');
 }
 
 function createPanZoom(svg, onPanCallBack) {
