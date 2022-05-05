@@ -199,22 +199,32 @@ class imgLoader {
         this.loadImg(image);
 
 
-
         for (let k = minImgNumber, i = 0; k <= maxImgNumber; k++, i++) {
             this.dots[i].style.backgroundColor = image === k ? 'white' : '';
         }
-        // fire Google Analytics event
-        // dataLayer.push(
-        //     {
-        //         'event': 'ImgShow',
-        //         'img': `B1_${image}.jpg`
-        //     }
-        // );
+        dataLayer.push({ecommerce: null});  // Clear the previous ecommerce object.
+        dataLayer.push(
+            {
+                'ecommerce': {
+                    'impressions': [
+                        {
+                            'name': `B1_${image}.jpg`,
+                            'id': image,
+                            'list': 'List 1'
+                        }
+                    ]
+                },
+                'event': 'gtm-ee-event',
+                'gtm-ee-event-category': 'Enhanced Ecommerce',
+                'gtm-ee-event-action': 'Product Impressions',
+                'gtm-ee-event-label': `B1_${image}.jpg`
+            }
+        );
     }
 
-    reqListener(response){
-        this.svgContainer.appendChild(response.responseXML.children[0]);
-        // this.svgContainer.innerHTML = response.responseText;
+    reqListener(response) {
+        // this.svgContainer.appendChild(response.responseXML.children[0]);
+        this.svgContainer.innerHTML = response.responseText;
         setTimeout(
             function () {
                 this.onResize();
@@ -237,7 +247,7 @@ class imgLoader {
             }
         );
         let time = Date.now();
-        oReq.open("GET", `/assets/imgs/B1_${image}.svg?${time}`);
+        oReq.open("GET", `assets/imgs/B1_${image}.svg?${time}`);
         oReq.send();
     }
 
