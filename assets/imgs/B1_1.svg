@@ -1,14 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="254mm" height="179.66266mm" viewBox="0 0 254 179.66266" version="1.1" id="svg1985">
-  <g id="bg" transform="translate(0,0)">
-    <image
-      xlink:href="assets/imgs/B1_1.jpg"
-      y="0"
-      x="0"
-      id="image2077"
-      preserveAspectRatio="xMidYMid meet"
-      height="179.66266"
-      width="254"
-    />
-  </g>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1024px" height="724px"
+     viewBox="0 0 1024 724" version="1.1" id="svg1985"
+     preserveAspectRatio="xMidYMid meet">
+    <switch>
+        <foreignObject x="0" y="0" width="100%" height="100%"
+                       requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+            <img src="assets/imgs/B1_1.jpg"
+                 srcset="assets/imgs/B1_1/B1_1_480.jpg 480w,
+                     assets/imgs/B1_1/B1_1_768.jpg 768w,
+                     assets/imgs/B1_1/B1_1_1024.jpg 1024w"
+                 sizes="(max-width: 600px) 480px,
+                        (max-width: 768px) 768px,
+                        1024px"
+                 height="100%"
+                 width="100%"
+            />
+        </foreignObject>
+
+        <image xlink:href="assets/imgs/B1_1.jpg" width="1024" height="724">
+            <title>A responsive placeholder image</title>
+        </image>
+    </switch>
 </svg>
